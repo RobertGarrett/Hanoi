@@ -4,7 +4,7 @@ class Game{
 
     constructor(difficulty = 3){
         this.difficulty = difficulty;
-        this.towers = new Array(3).fill(0).map(e => new Array());
+        this.towers = [[],[],[]];
         this.towers[0] = [...Array(difficulty).keys()].map(i => difficulty - i);
     }
 
