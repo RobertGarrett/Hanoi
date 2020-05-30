@@ -1,13 +1,15 @@
-Array.prototype.last = function(){return this[this.length-1];}
-
 class Game{
+
     constructor(difficulty = 3){
         this.difficulty = difficulty;
         this.towers = new Array(3).fill(0).map(e => new Array());
+
         for(var i = 0; i < difficulty; i++)
             this.towers[0].push(difficulty - i);
+
         console.log(this.towers);
     }
+
     run(reader, completion){
         this.promptMove(reader, (a, b) => {
             if(!this.move(a, b))
@@ -22,18 +24,21 @@ class Game{
             }
         });
     }
+
     promptMove(reader, callback){
         this.print();
-        reader.question("Please enter a move (eg. 'from, to'): ", function(ans){
-            const arr = ans.split(" ").map( e => parseInt(e, 10) );
-            console.log(this);
-            callback(arr[0], arr[1]);
+        reader.question("Starting Tower: ", function(start){
+            reader.question("Ending Tower: ", function(end){
+                callback(parseInt(start, 10), parseInt(end, 10));
+            });
         });
     }
+
     isValidMove(start, end){
         let from = this.towers[start], to = this.towers[end];
         return from.length > 0 && ( to.length === 0 || to.last() > from.last() );
     }
+
     move(start, end){
         if( this.isValidMove(start, end) ){
             this.towers[end].push(this.towers[start].pop());
@@ -41,10 +46,12 @@ class Game{
         }
         return false;
     }
+
     isWon(){
-        return this.towers[1].length === this.difficulty ||
+        return  this.towers[1].length === this.difficulty ||
                 this.towers[2].length === this.difficulty;
     }
+
     print(){
         console.log();
         for(var i = this.difficulty-1; i >= 0; i--){

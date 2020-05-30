@@ -17,8 +17,11 @@ function completion(){
 
 function startGame(){
     reader.question("Difficulty (1 <= n <= 10): ", (ans) => {
-        let game = new Game(parseInt(ans, 10));
-        game.run(reader, completion);
+        let x = parseInt(ans, 10);
+        if(x <= 10)
+            new Game(x).run(reader, completion);
+        else
+            startGame();
     })
 }
 
