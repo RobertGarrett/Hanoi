@@ -1,13 +1,11 @@
+Array.prototype.last = function(){return this[this.length-1];}
+
 class Game{
 
     constructor(difficulty = 3){
         this.difficulty = difficulty;
         this.towers = new Array(3).fill(0).map(e => new Array());
-
-        for(var i = 0; i < difficulty; i++)
-            this.towers[0].push(difficulty - i);
-
-        console.log(this.towers);
+        this.towers[0] = [...Array(difficulty).keys()].map(i => difficulty - i);
     }
 
     run(reader, completion){
@@ -29,7 +27,7 @@ class Game{
         this.print();
         reader.question("Starting Tower: ", function(start){
             reader.question("Ending Tower: ", function(end){
-                callback(parseInt(start, 10), parseInt(end, 10));
+                callback( parseInt(start, 10), parseInt(end, 10) );
             });
         });
     }
